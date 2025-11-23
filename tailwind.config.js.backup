@@ -1,0 +1,53 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./**/*.{js,ts,jsx,tsx}",
+  ],
+  safelist: [
+    // Button states
+    'text-gray-400',
+    'hover:text-white',
+    'bg-gray-800',
+    'bg-emerald-600',
+    'text-white',
+    'shadow-lg',
+    'shadow-emerald-900/50',
+    'bg-blue-600',
+    'shadow-blue-900/50',
+    'bg-blue-900/20',
+    'border-blue-500',
+    'text-blue-400',
+    'border-r-2',
+    'text-gray-200',
+    'hover:bg-white/5',
+    'text-gray-300',
+    'hover:bg-gray-800',
+    'border-l-4',
+    'border-transparent',
+    'hover:border-blue-500',
+    // Layout and spacing
+    'flex',
+    'items-center',
+    'gap-2',
+    'px-4',
+    'py-2',
+    'text-xs',
+    'font-bold',
+    'uppercase',
+    'tracking-wider',
+    'rounded-md',
+    'transition-all',
+    // Colors
+    'text-black',
+    'bg-black',
+    'text-green-500',
+    'bg-green-900',
+    'text-green-100',
+    'border-green-500',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
