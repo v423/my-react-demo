@@ -2302,24 +2302,6 @@ export default function FinalWebStyleLab() {
             className={`flex-1 rounded-xl overflow-hidden shadow-2xl relative flex flex-col transition-all duration-500 border-4 border-gray-800 ${theme.bgApp}`}
             style={fontStack(theme.fontType)}
           >
-            {/* Browser Bar */}
-            <div
-              className={`h-12 flex items-center px-4 border-b shrink-0 z-30 transition-colors duration-300 ${theme.bgPanel} ${theme.border}`}
-            >
-              <div className="flex gap-2 mr-4">
-                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-              </div>
-              <div
-                className={`flex-1 h-8 rounded px-3 flex items-center text-xs ${theme.bgApp} bg-opacity-50 mx-4 max-w-xl truncate border border-transparent hover:border-gray-300 transition-colors`}
-              >
-                <span className={`${theme.textMuted} opacity-70`}>
-                  https://dreamhome.lab/{activeThemeId}/{activeView}
-                </span>
-              </div>
-            </div>
-
             {/* Content Area */}
             <div id="demo-viewport" className="flex-1 overflow-y-auto custom-scrollbar relative">
               <div className="p-4 md:p-8 min-h-full">
