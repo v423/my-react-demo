@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { getTheme } from './constants/themes';
+import { getTheme, STYLE_CATEGORIES } from './constants/themes';
 import Nav from './components/Nav';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import ViewLanding from './views/ViewLanding';
@@ -14,7 +14,10 @@ function App() {
   const [activeThemeId, setActiveThemeId] = useState('default');
   const [activeView, setActiveView] = useState('landing');
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [expandedCategory, setExpandedCategory] = useState('核心数字风格');
+  // Initialize with all categories expanded
+  const [expandedCategories, setExpandedCategories] = useState(
+    STYLE_CATEGORIES.map(cat => cat.title_zh)
+  );
 
   const theme = getTheme(activeThemeId);
 
@@ -31,7 +34,19 @@ function App() {
   };
 
   const handleCategoryToggle = (categoryTitle) => {
-    setExpandedCategory(expandedCategory === categoryTitle ? '' : categoryTitle);
+    setExpandedCategories(prev => 
+      prev.includes(categoryTitle)
+        ? prev.filter(cat => cat !== categoryTitle)
+        : [...prev, categoryTitle]
+    );
+  };
+
+  const handleExpandAll = () => {
+    setExpandedCategories(STYLE_CATEGORIES.map(cat => cat.title_zh));
+  };
+
+  const handleCollapseAll = () => {
+    setExpandedCategories([]);
   };
 
   const renderView = () => {
@@ -59,8 +74,10 @@ function App() {
           onClose={() => setSidebarOpen(false)}
           activeThemeId={activeThemeId}
           onThemeChange={setActiveThemeId}
-          expandedCategory={expandedCategory}
+          expandedCategories={expandedCategories}
           onCategoryToggle={handleCategoryToggle}
+          onExpandAll={handleExpandAll}
+          onCollapseAll={handleCollapseAll}
         />
 
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
