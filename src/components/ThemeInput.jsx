@@ -1,8 +1,9 @@
 import { useTheme } from '../contexts/ThemeContext';
 import { fontStack } from '../constants/themes';
 
-const ThemeInput = ({ type = 'text', placeholder, icon: Icon, ...props }) => {
-    const { theme } = useTheme();
+const ThemeInput = ({ theme: propTheme, type = 'text', placeholder, icon: Icon, ...props }) => {
+    const { theme: contextTheme } = useTheme();
+    const theme = propTheme || contextTheme;
   return (
     <div className="relative w-full h-full">
       {Icon && (

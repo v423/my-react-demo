@@ -1,11 +1,12 @@
 import React from 'react';
 import { ArrowRight, MapPin, Quote, Search, User } from 'lucide-react';
-import { useTheme } from '../contexts/ThemeContext';
 import LayoutContainer from '../components/LayoutContainer';
 import ThemeHeading from '../components/ThemeHeading';
 import ThemeText from '../components/ThemeText';
 import ThemeButton from '../components/ThemeButton';
 import ThemeInput from '../components/ThemeInput';
+import { fontStack } from '../constants/themes';
+
 const ViewLanding = ({ theme, navigate }) => {
   return (
     <div className="animate-fadeIn">
@@ -234,4 +235,6 @@ const ViewLanding = ({ theme, navigate }) => {
       </LayoutContainer>
     </div>
   );
+};
+
 export default ViewLanding;

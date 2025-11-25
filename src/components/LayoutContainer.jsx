@@ -1,7 +1,8 @@
 import { useTheme } from '../contexts/ThemeContext';
 
-const LayoutContainer = ({ children, className = '' }) => {
-  const { theme } = useTheme();
+const LayoutContainer = ({ theme: propTheme, children, className = '' }) => {
+  const { theme: contextTheme } = useTheme();
+  const theme = propTheme || contextTheme;
   let padding = 'p-6 md:p-8';
   let width = 'max-w-6xl';
   if (theme.density === 'spacious') {

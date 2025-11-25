@@ -8,7 +8,8 @@ const ThemeButton = ({
   onClick,
   ...props
 }) => {
-  const { theme } = useTheme();
+  const { theme: contextTheme } = useTheme();
+  const theme = props.theme || contextTheme;
   const baseStyle =
     'px-6 h-12 font-bold transition-transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer select-none whitespace-nowrap';
   const style =

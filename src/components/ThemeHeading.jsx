@@ -1,8 +1,9 @@
 import { useTheme } from '../contexts/ThemeContext';
 import { fontStack } from '../constants/themes';
 
-const ThemeHeading = ({ level = 1, children, className = '', align = 'left' }) => {
-  const { theme } = useTheme();
+const ThemeHeading = ({ theme: propTheme, level = 1, children, className = '', align = 'left' }) => {
+  const { theme: contextTheme } = useTheme();
+  const theme = propTheme || contextTheme;
   const Tag = `h${level}`;
   const size =
     level === 1

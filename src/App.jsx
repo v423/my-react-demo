@@ -1,0 +1,100 @@
+import React, { useState, useEffect } from 'react';
+import { Menu } from 'lucide-react';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { getTheme } from './constants/themes';
+import Nav from './components/Nav';
+import ThemeSwitcher from './components/ThemeSwitcher';
+import ViewLanding from './views/ViewLanding';
+import ViewListings from './views/ViewListings';
+import ViewProperty from './views/ViewProperty';
+import ViewForm from './views/ViewForm';
+import ViewDescription from './views/ViewDescription';
+
+function App() {
+  const [activeThemeId, setActiveThemeId] = useState('default');
+  const [activeView, setActiveView] = useState('landing');
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [expandedCategory, setExpandedCategory] = useState('核心数字风格');
+
+  const theme = getTheme(activeThemeId);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeView]);
+
+  const navigate = view => {
+    if (view === 'description') {
+      setActiveView('description');
+    } else {
+      setActiveView(view);
+    }
+  };
+
+  const handleCategoryToggle = (categoryTitle) => {
+    setExpandedCategory(expandedCategory === categoryTitle ? '' : categoryTitle);
+  };
+
+  const renderView = () => {
+    switch (activeView) {
+      case 'landing':
+        return <ViewLanding theme={theme} navigate={navigate} />;
+      case 'listings':
+        return <ViewListings theme={theme} navigate={navigate} />;
+      case 'property':
+        return <ViewProperty theme={theme} navigate={navigate} />;
+      case 'form':
+        return <ViewForm theme={theme} navigate={navigate} />;
+      case 'description':
+        return <ViewDescription theme={theme} styleId={activeThemeId} navigate={navigate} />;
+      default:
+        return <ViewLanding theme={theme} navigate={navigate} />;
+    }
+  };
+
+  return (
+    <ThemeProvider>
+      <div className="flex h-screen bg-gray-950 text-white overflow-hidden">
+        <ThemeSwitcher
+          isOpen={isSidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          activeThemeId={activeThemeId}
+          onThemeChange={setActiveThemeId}
+          expandedCategory={expandedCategory}
+          onCategoryToggle={handleCategoryToggle}
+        />
+
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          <div className={`min-h-screen ${theme.bgApp} transition-colors duration-300 overflow-y-auto`}>
+            {/* Header with theme toggle */}
+            <div className="sticky top-0 z-40 flex items-center gap-2 bg-gray-900 border-b border-gray-800 px-4 h-12">
+              {!isSidebarOpen && (
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <Menu size={20} />
+                </button>
+              )}
+              <div className="flex-1 flex items-center justify-between">
+                <div className="text-sm text-gray-400">
+                  当前风格: <span className="text-blue-400 font-medium">{activeThemeId}</span>
+                </div>
+                <button
+                  onClick={() => navigate('description')}
+                  className="text-xs px-3 py-1 bg-blue-900/50 text-blue-300 hover:bg-blue-900 rounded transition-colors"
+                >
+                  查看风格介绍
+                </button>
+              </div>
+            </div>
+
+            <Nav theme={theme} activeView={activeView} navigate={navigate} />
+            <main>{renderView()}</main>
+          </div>
+        </div>
+      </div>
+    </ThemeProvider>
+  );
+}
+
+export default App;
