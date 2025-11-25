@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { getTheme, STYLE_CATEGORIES } from './constants/themes';
+import { applyColorVariant } from './constants/colorVariants';
 import Nav from './components/Nav';
 import ThemeSwitcher from './components/ThemeSwitcher';
+import ColorSchemeSelector from './components/ColorSchemeSelector';
 import ViewLanding from './views/ViewLanding';
 import ViewListings from './views/ViewListings';
 import ViewProperty from './views/ViewProperty';
@@ -14,12 +16,14 @@ function App() {
   const [activeThemeId, setActiveThemeId] = useState('default');
   const [activeView, setActiveView] = useState('landing');
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [activeColorVariant, setActiveColorVariant] = useState('variantA');
   // Initialize with all categories expanded
   const [expandedCategories, setExpandedCategories] = useState(
     STYLE_CATEGORIES.map(cat => cat.title_zh)
   );
 
-  const theme = getTheme(activeThemeId);
+  const baseTheme = getTheme(activeThemeId);
+  const theme = applyColorVariant(baseTheme, activeColorVariant);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -83,7 +87,7 @@ function App() {
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <div className={`min-h-screen ${theme.bgApp} transition-colors duration-300 overflow-y-auto`}>
             {/* Header with theme toggle */}
-            <div className="sticky top-0 z-40 flex items-center gap-2 bg-gray-900 border-b border-gray-800 px-4 h-12">
+            <div className="sticky top-0 z-40 flex items-center gap-3 bg-gray-900 border-b border-gray-800 px-4 h-14">
               {!isSidebarOpen && (
                 <button
                   onClick={() => setSidebarOpen(true)}
@@ -92,16 +96,26 @@ function App() {
                   <Menu size={20} />
                 </button>
               )}
-              <div className="flex-1 flex items-center justify-between">
+              <div className="flex-1 flex items-center justify-between gap-4">
                 <div className="text-sm text-gray-400">
                   当前风格: <span className="text-blue-400 font-medium">{activeThemeId}</span>
                 </div>
-                <button
-                  onClick={() => navigate('description')}
-                  className="text-xs px-3 py-1 bg-blue-900/50 text-blue-300 hover:bg-blue-900 rounded transition-colors"
-                >
-                  查看风格介绍
-                </button>
+                
+                <div className="flex items-center gap-3">
+                  {/* Color Scheme Selector */}
+                  <ColorSchemeSelector
+                    themeId={activeThemeId}
+                    activeVariant={activeColorVariant}
+                    onVariantChange={setActiveColorVariant}
+                  />
+                  
+                  <button
+                    onClick={() => navigate('description')}
+                    className="text-xs px-3 py-1.5 bg-blue-900/50 text-blue-300 hover:bg-blue-900 rounded transition-colors whitespace-nowrap"
+                  >
+                    查看风格介绍
+                  </button>
+                </div>
               </div>
             </div>
 
