@@ -1,5 +1,5 @@
 export const createTheme = (base, overrides = {}) => ({ ...base, ...overrides });
-const fontStack = type => {
+export const fontStack = type => {
   switch (type) {
     case 'sans':
       return { fontFamily: 'Inter, system-ui, sans-serif' };
