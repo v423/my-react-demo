@@ -1,12 +1,15 @@
 import React from 'react';
 import { ArrowRight, MapPin, Quote, Search, User } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { fontStack } from '../constants/themes';
 import LayoutContainer from '../components/LayoutContainer';
 import ThemeHeading from '../components/ThemeHeading';
 import ThemeText from '../components/ThemeText';
 import ThemeButton from '../components/ThemeButton';
 import ThemeInput from '../components/ThemeInput';
-const ViewLanding = ({ theme, navigate }) => {
+
+const ViewLanding = ({ navigate }) => {
+  const { theme } = useTheme();
   return (
     <div className="animate-fadeIn">
       <div
@@ -16,9 +19,9 @@ const ViewLanding = ({ theme, navigate }) => {
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
           alt="Hero"
           className={`absolute inset-0 w-full h-full object-cover z-0 ${
-            theme.effects.pixel ? 'pixelate' : ''
+            theme.effects?.pixel ? 'pixelate' : ''
           }`}
-          style={theme.effects.pixel ? { imageRendering: 'pixelated' } : {}}
+          style={theme.effects?.pixel ? { imageRendering: 'pixelated' } : {}}
         />
         <div
           className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30 z-0`}
@@ -30,44 +33,36 @@ const ViewLanding = ({ theme, navigate }) => {
           >
             DreamHome Real Estate
           </div>
-          <ThemeHeading
-            theme={{
-              ...theme,
-              textMain: 'text-white',
-              layout: theme.layout === 'centered' ? 'centered' : 'left',
-            }}
-            level={1}
+          <h1 
+            className={`text-4xl md:text-5xl font-bold mb-4 text-white`}
+            style={fontStack(theme.fontType)}
           >
             Discover Your <br />
             <span
               className={
-                theme.effects.bling
+                theme.effects?.bling
                   ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-500'
                   : ''
               }
             >
               Perfect Sanctuary
             </span>
-          </ThemeHeading>
+          </h1>
 
-          <ThemeText
-            theme={{
-              ...theme,
-              textMain: 'text-gray-200',
-              layout: theme.layout === 'centered' ? 'centered' : 'left',
-            }}
-            className="text-xl mb-10 max-w-2xl font-medium drop-shadow-md"
+          <p
+            className="text-xl mb-10 max-w-2xl font-medium drop-shadow-md text-gray-200"
+            style={fontStack(theme.fontType)}
           >
             Explore thousands of premium listings across 500+ cities. From modern apartments to
             seaside villas.
-          </ThemeText>
+          </p>
 
           <div
             className={`mx-auto max-w-4xl p-4 md:p-6 ${theme.bgPanel} ${theme.corners} ${theme.shadow} ${theme.border}`}
           >
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="flex-grow w-full md:w-auto h-12">
-                <ThemeInput theme={theme} icon={MapPin} placeholder="Where do you want to live?" />
+                <ThemeInput icon={MapPin} placeholder="Where do you want to live?" />
               </div>
               <div className="w-full md:w-48 h-12">
                 <select
@@ -81,7 +76,6 @@ const ViewLanding = ({ theme, navigate }) => {
               </div>
               <div className="w-full md:w-48 h-12">
                 <ThemeButton
-                  theme={theme}
                   className="w-full h-full"
                   onClick={() => navigate('listings')}
                 >
@@ -93,7 +87,7 @@ const ViewLanding = ({ theme, navigate }) => {
         </div>
       </div>
 
-      <LayoutContainer theme={theme}>
+      <LayoutContainer>
         <div
           className={`grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 text-center ${theme.border} ${
             theme.corners
@@ -124,7 +118,7 @@ const ViewLanding = ({ theme, navigate }) => {
 
         <div className="mb-20">
           <div className="flex justify-between items-end mb-8">
-            <ThemeHeading theme={theme} level={2}>
+            <ThemeHeading level={2}>
               Featured Homes
             </ThemeHeading>
             <button
@@ -168,6 +162,7 @@ const ViewLanding = ({ theme, navigate }) => {
                 <div className="h-64 relative overflow-hidden">
                   <img
                     src={`https://images.unsplash.com/photo-${item.img}?auto=format&fit=crop&w=800&q=80`}
+                    alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div
@@ -179,10 +174,10 @@ const ViewLanding = ({ theme, navigate }) => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <ThemeHeading theme={theme} level={3} className="text-xl mb-2">
+                  <ThemeHeading level={3} className="text-xl mb-2">
                     {item.title}
                   </ThemeHeading>
-                  <ThemeText theme={theme} muted className="flex items-center gap-2 text-sm">
+                  <ThemeText muted className="flex items-center gap-2 text-sm">
                     <MapPin size={14} /> {item.location}
                   </ThemeText>
                 </div>
@@ -196,7 +191,7 @@ const ViewLanding = ({ theme, navigate }) => {
             className={`p-8 md:p-12 ${theme.bgPanel} ${theme.corners} ${theme.shadow} ${theme.border}`}
           >
             <Quote size={40} className={`${theme.textMuted} mb-6 opacity-50`} />
-            <ThemeText theme={theme} className="text-lg md:text-xl leading-relaxed mb-6 italic">
+            <ThemeText className="text-lg md:text-xl leading-relaxed mb-6 italic">
               "DreamHome helped us find our dream beach house in record time. The interface is so
               intuitive and the filtering is precise."
             </ThemeText>
@@ -214,18 +209,18 @@ const ViewLanding = ({ theme, navigate }) => {
           </div>
 
           <div className={`text-${theme.layout === 'centered' ? 'center' : 'left'}`}>
-            <ThemeHeading theme={theme} level={2}>
+            <ThemeHeading level={2}>
               Ready to move in?
             </ThemeHeading>
-            <ThemeText theme={theme} muted className="text-lg mb-8">
+            <ThemeText muted className="text-lg mb-8">
               Join thousands of happy homeowners. Sign up today to get alerts on new listings
               matching your criteria.
             </ThemeText>
             <div className="flex flex-col sm:flex-row gap-4">
-              <ThemeButton theme={theme} onClick={() => navigate('form')}>
+              <ThemeButton onClick={() => navigate('form')}>
                 <User size={18} /> Create Account
               </ThemeButton>
-              <ThemeButton theme={theme} variant="secondary" onClick={() => navigate('listings')}>
+              <ThemeButton variant="secondary" onClick={() => navigate('listings')}>
                 Browse First
               </ThemeButton>
             </div>
@@ -234,4 +229,6 @@ const ViewLanding = ({ theme, navigate }) => {
       </LayoutContainer>
     </div>
   );
+};
+
 export default ViewLanding;
