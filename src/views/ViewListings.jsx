@@ -4,6 +4,7 @@ import LayoutContainer from '../components/LayoutContainer';
 import ThemeHeading from '../components/ThemeHeading';
 import ThemeText from '../components/ThemeText';
 import { fontStack } from '../constants/themes';
+import { getCardAnimation, getSpecialEffects } from '../constants/animations';
 
 const ViewListings = ({ theme, navigate }) => {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
@@ -145,13 +146,17 @@ const ViewListings = ({ theme, navigate }) => {
             price: '$950k',
             type: 'SALE',
           },
-        ].map((item, idx) => (
+        ].map((item, idx) => {
+          const cardAnimation = getCardAnimation(theme.id || 'default');
+          const specialEffects = getSpecialEffects(theme.id || 'default');
+          
+          return (
           <div
             key={idx}
             onClick={() => navigate('property')}
             className={`group cursor-pointer ${theme.bgPanel} ${theme.corners} ${theme.shadow} ${theme.border} overflow-hidden ${
               viewMode === 'grid' ? 'flex flex-col' : 'flex flex-row'
-            } transition-all hover:-translate-y-1 hover:shadow-xl`}
+            } ${cardAnimation} ${specialEffects.shadow || ''}`}
           >
             <div className={viewMode === 'grid' ? 'h-56 relative overflow-hidden' : 'w-64 h-48 relative overflow-hidden flex-shrink-0'}>
               <img
@@ -189,7 +194,8 @@ const ViewListings = ({ theme, navigate }) => {
               </div>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Pagination */}
